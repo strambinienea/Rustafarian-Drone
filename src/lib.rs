@@ -122,6 +122,14 @@ impl RustafarianDrone {
 
         match self.neighbors.get(&next_hop) {
             Some(channel) => {
+                // Step 4.5: Check Packet Drop Rate
+
+                if self.should_drop() {
+                    // Send nack
+                    todo!();
+                    return;
+                }
+
                 match channel.send(new_packet) {
                     Ok(()) => {},
                     Err(error) => {
